@@ -4,17 +4,19 @@ i = 0
 signup = "Please Enter 1 For SignUp"
 signin = "Please Enter 2 For SignIn"
 quit = "Please Enter 3 to Quit"
+resetPassword = "Please Enter 1 For reseting the password"
+signOut = "Please Enter 2 For signing Out"
 data = []
 dateFormat = re.compile(r'^\d{2}/\d{2}/\d{4}$')
 currentYear = 2023
 
-print(data)
 while i == 0:
     print(signup)
     print(signin)
     print(quit)
     userInput = input("Enter 1, 2, or 3:- ")
     if userInput == '1':
+        name = input("Please enter your Full Name:- ")
         mobile = input("Please enter your mobile number, start with 0 and must be 10 digits:- ")
         password = input("Create a new password:- ")
         confirmPassword = input("Re-enter your password:- ")
@@ -43,19 +45,51 @@ while i == 0:
             print("Your passwards are not matching. Please try again:")
         elif age < 21:
             print("You must be at least 21 years old to Sign Up")
+            break
         else:
+            data.append(name)
             data.append(mobile)
             data.append(password)
             data.append(dateOfBirth)
             print("You have Successfully Signed Up")
     elif userInput == '2':
-        print("SignIn")
-        i+=1
+        if len(data) == 0:
+            print("You have not Signed Up, Please Sign Up First")
+        else:
+            username = input("Please enter your Username (Mobile Number):- ")
+            loginPassword = input("Please enter your Password:- ")
+
+            if username == data[1] and loginPassword == data[2]:
+                print("You have Successfully Signed In.")
+                print("Welcome,",data[0])
+                print(resetPassword)
+                print(signOut)
+                loggedUserInput = input("Enter 1 or 2:- ")
+
+                if loggedUserInput == '1':
+                    resetUserInput = input("Please enter your Username (Mobile Number):- ")
+                    oldPassword = input("Please enter your old password:- ")
+                    if username == data[1] and loginPassword == data[2] and oldPassword == data[2]:
+                        newPassword = input("Please enter your new password:- ")
+                        if newPassword == data[2]:
+                            print("You can not re-enter your old password, Please choose new one")
+                        else:
+                            data[2] = newPassword
+                            print("Your password has been reset successlly")
+                    else:
+                        print("The inFormation you provided is not valid")
+                elif loggedUserInput == '2':
+                    print("You are Successlly Signed Out.")
+                else:
+                    print("Please enter valid input eg:- 1 or 2.")
+            else:
+                print("You have not Sign up with this contact number, Please Sign Up First.")
+
     elif userInput == '3':
         print("Thank You for using the Application")
         break    
     else:
-        print("no")
+        print("Please enter valid input eg:- 1, 2 or 3")
        
         
         
