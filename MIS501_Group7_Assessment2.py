@@ -5,11 +5,15 @@ signup = "Please Enter 1 For SignUp"
 signin = "Please Enter 2 For SignIn"
 quit = "Please Enter 3 to Quit"
 resetPassword = "Please Enter 1 For reseting the password"
+passwordErrorMessage = "Password must start with alphabetic characters, must contain one @ and must end with digit"
 signOut = "Please Enter 2 For signing Out"
 data = []
 dateFormat = re.compile(r'^\d{2}/\d{2}/\d{4}$')
 currentYear = 2023
 emptyInputs = "Inputs cannot be empty, please enter all the inputs"
+
+MobileValidationRegex = re.compile(r'^0[0-9]{9}$')
+PasswordValidationRegex = re.compile(r'^[a-zA-Z@]*\d$')
 
 #this loop keeps running until the condition is met and user do not break loop.
 while True: 
@@ -34,33 +38,27 @@ while True:
         #iF all the input are Field then it proceeds to Further process.
         else:
             #only the year taken From the input. 
-            yearOfBirth = dateOfBirth[-4:] 
+            yearOfBirth = dateOfBirth.split("/") 
             #year oF birth is converted to integer.
-            convertedYearOfBirth = int(yearOfBirth) 
+            convertedYearOfBirth = int(yearOfBirth[2]) 
             #it calculates the age oF user.
             age = currentYear - convertedYearOfBirth
-            #this is For the password validation which checks is there any number in end oF password.
-            numericValueAtTheEnd = password[-1].isdigit()
+
+            isMobileValid = re.search(MobileValidationRegex, mobile)
+
+            isPasswordValid = re.search(PasswordValidationRegex, password)
+
 
             #this condition checks are all the required things are there or not.
             #checks whether there is 0 in number or not.
-            if mobile.find('0') == -1:
-                print("Mobile number must contain 0 at the beginning")
-            #checks whether the 0 is in index 0 or not.
-            elif mobile.index('0') != 0:
-                print("Mobile number must start with 0")
-            #checks the length of the mobile number == 10 or not.
-            elif len(mobile) != 10:
-                print("Mobile number must not be less than or greater than 10 digits")
+            if isMobileValid == None:
+                print("Mobile number must start with 0 and must be equal to 10 digits")
             #checks the Format oF date oF birth is correct or not.
             elif not dateFormat.match(dateOfBirth):
                 print("You have entered a date of birth in invalid format. Please try again.")
-            #checks whether the password contains @ or not.
-            elif password.find('@') == -1:
-                print("Password must include @")
-            #checks is there any number in end oF password.
-            elif numericValueAtTheEnd == False:
-                print("Password must contain a number at the end")
+            #checks whether the password starts with alpha, contains @ or not and end with digit or not.
+            elif isPasswordValid == None:
+                print(passwordErrorMessage)
             #checks whether the password and conFIrmPassword match or not.
             elif password != confirmPassword:
                 print("Your passwards are not matching. Please try again:")
@@ -114,12 +112,12 @@ while True:
                                 if isUsername == data[1] and isDateOfBirth == data[3]:
                                     newResetPassword = input("Please enter your new password:- ")
                                     confirmNewResetPassword = input("Please re-enter the new password:- ")
-                                    #checks whether the input contains @ or not.
-                                    if newResetPassword.find('@') == -1:
-                                        print("Password must include @")
-                                    #checks whether the input contains number at the end or not.
-                                    elif newResetPassword[-1].isdigit() == False:
-                                        print("Password must contain a number at the end")
+
+                                    isResetPasswordValid = re.search(PasswordValidationRegex, newResetPassword)
+
+                                    #checks whether the password starts with alpha, contains @ or not and end with digit or not.
+                                    if isResetPasswordValid == None:
+                                        print(passwordErrorMessage)
                                     #checks whether the password entered matches the password in list oF data.
                                     elif newResetPassword == data[2]:
                                         print("You can not re-enter your old password, Please choose new one")
@@ -155,12 +153,12 @@ while True:
                                 #iF they match then user is given permission to reset password.
                                 if username == data[1] and loginPassword == data[2] and oldPassword == data[2]:
                                     newPassword = input("Please enter your new password:- ")
-                                    #checks whether password has @ or not.
-                                    if newPassword.find('@') == -1:
-                                       print("Password must include @")
-                                    #checks whether password has number at the end or not.
-                                    elif newPassword[-1].isdigit() == False:
-                                       print("Password must contain a number at the end")
+
+                                    isNewPasswordValid = re.search(PasswordValidationRegex, newPassword)
+
+                                    #checks whether the password starts with alpha, contains @ or not and end with digit or not.
+                                    if isNewPasswordValid == None:
+                                       print(passwordErrorMessage)
                                     #checks whether new password matches with password in list oF data/old password or not.
                                     elif newPassword == data[2]:
                                        print("You can not re-enter your old password, Please choose new one")
