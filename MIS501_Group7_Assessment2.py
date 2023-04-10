@@ -12,8 +12,8 @@ dateFormat = re.compile(r'^\d{2}/\d{2}/\d{4}$')
 currentYear = 2023
 emptyInputs = "Inputs cannot be empty, please enter all the inputs"
 
-MobileValidationRegex = re.compile(r'^0[0-9]{9}$')
-PasswordValidationRegex = re.compile(r'^[a-zA-Z@]*\d$')
+mobileValidationRegex = re.compile(r'^0[0-9]{9}$')
+passwordValidationRegex = re.compile(r'^[a-zA-Z@]*\d$')
 
 
 while True: #this loop keeps running until the condition is met and user do not break loop.
@@ -38,8 +38,8 @@ while True: #this loop keeps running until the condition is met and user do not 
             yearOfBirth = dateOfBirth.split("/") #only the year taken From the input with the split method.            
             convertedYearOfBirth = int(yearOfBirth[2]) #year oF birth is converted to integer.           
             age = currentYear - convertedYearOfBirth #it calculates the age oF user.           
-            isMobileValid = re.search(MobileValidationRegex, mobile) #checks For the valid mobile input with regular expression.           
-            isPasswordValid = re.search(PasswordValidationRegex, password) #checks For the valid password input with regular expression.
+            isMobileValid = re.search(mobileValidationRegex, mobile) #checks For the valid mobile input with regular expression.           
+            isPasswordValid = re.search(passwordValidationRegex, password) #checks For the valid password input with regular expression.
 
             #this condition checks are all the required things are there or not.
             if isMobileValid == None: #checks whether there is 0 in number or not.
@@ -89,7 +89,7 @@ while True: #this loop keeps running until the condition is met and user do not 
                                     newResetPassword = input("Please enter your new password:- ")
                                     confirmNewResetPassword = input("Please re-enter the new password:- ")
                                                                         
-                                    isResetPasswordValid = re.search(PasswordValidationRegex, newResetPassword) #checks For the valid reset password input with regular expression.
+                                    isResetPasswordValid = re.search(passwordValidationRegex, newResetPassword) #checks For the valid reset password input with regular expression.
                                     
                                     if isResetPasswordValid == None: #checks whether the password starts with alpha, contains @ or not and end with digit or not.
                                         print(passwordErrorMessage)                                    
@@ -124,7 +124,7 @@ while True: #this loop keeps running until the condition is met and user do not 
                                 if username == data[1] and loginPassword == data[2] and oldPassword == data[2]:
                                     newPassword = input("Please enter your new password:- ")
                                    
-                                    isNewPasswordValid = re.search(PasswordValidationRegex, newPassword) #checks For the valid reset password input with regular expression.
+                                    isNewPasswordValid = re.search(passwordValidationRegex, newPassword) #checks For the valid reset password input with regular expression.
                                    
                                     if isNewPasswordValid == None: #checks whether the password starts with alpha, contains @ or not and end with digit or not.
                                        print(passwordErrorMessage)                                    
